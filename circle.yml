@@ -10,21 +10,21 @@ dependencies:
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS tutum.co
     - "if [[ -e ~/docker/image.tgz ]]; then cat ~/docker/image.tar.gz | gunzip | docker load; fi" :
         timeout: 600
-    - docker build -t neilellis/usergrid-launcher-docker .
-    - "if [[ ! -d ~/docker ]]; then mkdir -p ~/docker ; fi ; docker save neilellis/usergrid-launcher-docker | gzip > ~/docker/image.tar.gz" :
+    - docker build -t neilellis/usergrid .
+    - "if [[ ! -d ~/docker ]]; then mkdir -p ~/docker ; fi ; docker save neilellis/usergrid | gzip > ~/docker/image.tar.gz" :
         timeout: 600
 
 test:
   override:
-    -  'cont=$(docker run -d -p 8080:80 neilellis/usergrid-launcher-docker) ; sleep 30 ; docker logs $cont ;  curl  http://localhost:8080/status | grep "true"  ; sleep 1 ; docker logs $cont'
+    -  'cont=$(docker run -d -p 8080:80 neilellis/usergrid) ; sleep 30 ; docker logs $cont ;  curl  http://localhost:8080/status | grep "true"  ; sleep 1 ; docker logs $cont'
 
 deployment:
   all:
     branch: /.*/
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS tutum.co
-      - docker tag -f neilellis/usergrid-launcher-docker tutum.co/neilellis/usergrid-launcher-docker:${CIRCLE_BRANCH}
-      - docker push tutum.co/neilellis/usergrid-launcher-docker:${CIRCLE_BRANCH}
+      - docker tag -f neilellis/usergrid tutum.co/neilellis/usergrid:${CIRCLE_BRANCH}
+      - docker push tutum.co/neilellis/usergrid:${CIRCLE_BRANCH}
 
 
 notify:

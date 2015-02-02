@@ -28,7 +28,7 @@ CASS_URL (localhost:9160) - do not change at this stage
 
 To start Usergrid simply run
 
-`docker run -p 8080:80 -p 9160:9160 -dit neilellis/usergrid-launcher-docker
+`docker run -p 8080:80 -p 9160:9160 -dit neilellis/usergrid
 
 This will expose port 80 on the VM, 9160 on the VM locally so that you can connect over HTTP and to Cassandra.
 
