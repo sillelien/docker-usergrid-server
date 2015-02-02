@@ -8,7 +8,7 @@ dependencies:
 
   override:
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS tutum.co
-    - "if [[ -e ~/docker/image.tgz ]]; then cat ~/docker/image.tar.gz | gunzip | docker load; fi" :
+    - "if [ -f ~/docker/image.tgz ]; then cat ~/docker/image.tar.gz | gunzip | docker load; fi" :
         timeout: 600
     - docker build -t neilellis/usergrid .
     - "if [[ ! -d ~/docker ]]; then mkdir -p ~/docker ; fi ; docker save neilellis/usergrid | gzip > ~/docker/image.tar.gz" :
